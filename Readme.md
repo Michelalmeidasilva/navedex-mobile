@@ -5,8 +5,7 @@
 Desafio Navedex:
 Criar um aplicativo para visualização e criação dos navers, possuindo informações como: nome, idade, cargo, tempo de empresa e projetos que participou.
 As telas utilizadas como guia foram as que estão disponiveis no [figma](https://www.figma.com/file/MIh7DeADz8M3mmcQwpcFdD/Teste-Mobile?node-id=1253%3A0)
-Foi feito a integração com a api da navedex desenvolvida pela nave.rs disponivel em:[Navedex Api](https://navedex-api.herokuapp.com/v1/)
-A documentação da API oficial do teste utilizada foi: [postman](https://www.postman.com/) importando [esse](https://www.getpostman.com/collections/e6afe4028c2a1e56e577)
+Foi feito a integração com a api da navedex desenvolvida pela nave.rs disponivel na uri: https://navedex-api.herokuapp.com/v1/. A documentação da API está disponivel em [collection](https://www.getpostman.com/collections/e6afe4028c2a1e56e577), é preciso utilizar o postman para importa-la.
 
 Para mais informações sobre os requisitos do projeto, acesse [repositório oficial do desáfio](https://github.com/naveteam/react-native-challenge)
 
