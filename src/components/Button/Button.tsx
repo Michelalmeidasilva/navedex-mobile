@@ -1,34 +1,55 @@
 import React, { FC, useMemo } from 'react';
 
-import { TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps, ActivityIndicator } from 'react-native';
 import { variant, space, layout } from 'styled-system';
 import styled from 'styled-components/native';
 
 import { theme } from 'src/theme';
-import { Text, ColumnProps } from 'src/components';
+import { Text, ColumnProps, Icon, Row } from 'src/components';
 
 const PRIMARY = 'primary';
 const SECONDARY = 'secondary';
+const DISABLED = 'disabled';
 
 interface ButtonComponentProps extends ColumnProps, TouchableOpacityProps {
   title: string;
-  variant?: string;
+  icon?: string;
+  variant: string;
   disabled?: boolean;
+  isLoading?: boolean;
   accessibilityLabel: string;
 }
 interface StyledButtonProps extends TouchableOpacityProps {
-  variant?: string;
+  variant: string;
 }
-const ButtonComponent: FC<ButtonComponentProps> = ({ title, variant, disabled, ...props }) => {
+const ButtonComponent: FC<ButtonComponentProps> = ({
+  title,
+  variant,
+  disabled,
+  isLoading,
+  icon,
+  ...props
+}) => {
   const { colors } = theme;
 
-  const textColor = useMemo(() => (variant === PRIMARY ? 'white' : 'black'), [variant, colors]);
+  const textColor = useMemo(
+    () => (variant === PRIMARY ? 'white' : variant === SECONDARY ? 'black' : 'gray.n500'),
+    [variant, disabled, colors]
+  );
 
   return (
-    <StyledButton variant={variant} {...props}>
-      <Text variant='small' color={textColor} fontWeight={600} lineHeight='24px'>
-        {title}
-      </Text>
+    <StyledButton variant={disabled ? 'disabled' : variant} disabled={disabled} {...props}>
+      {isLoading && <ActivityIndicator size='small' color='white' />}
+
+      {!isLoading && (
+        <Row>
+          {icon && <Icon icon={icon} marginRight={13} color={textColor} />}
+
+          <Text variant='small' color={textColor} fontWeight={600} lineHeight='24px'>
+            {title}
+          </Text>
+        </Row>
+      )}
     </StyledButton>
   );
 };
@@ -38,11 +59,15 @@ const StyledButton: FC<StyledButtonProps> = styled.TouchableOpacity(
     variants: {
       [PRIMARY]: {
         backgroundColor: 'primary',
-        borderColor: 'primary'
+        borderColor: 'transparent'
       },
       [SECONDARY]: {
-        backgroundColor: 'secondary',
+        backgroundColor: 'transparent',
         borderColor: 'black'
+      },
+      [DISABLED]: {
+        backgroundColor: 'gray',
+        borderColor: 'gray'
       }
     }
   }),

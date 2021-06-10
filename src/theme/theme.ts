@@ -9,7 +9,7 @@ export default {
     background: '#ffffff',
     secondary: '#ffffff',
     gray: {
-      n500: 'BDBDBD'
+      n500: '#BDBDBD'
     },
     blue: {
       n500: '#42526E'
