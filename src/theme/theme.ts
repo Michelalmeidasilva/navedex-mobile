@@ -5,7 +5,8 @@ export default {
     error: '#D50000',
     warning: '#F49F14',
     success: '#43A047',
-    primary: '#933A16',
+    primary: '#212121',
+    background: '#ffffff',
     secondary: '#ffffff',
     gray: {
       n500: 'BDBDBD'
