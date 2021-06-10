@@ -13,12 +13,4 @@ it('renders correctly', () => {
 });
 
 it('should be have 5 letters ', () => {
-  // renderer.create(
-  //   <Input
-  //     name='test'
-  //     onChangeText={value =>
-  //        onChange(value);
-  //     }
-  //   />
-  // );
 });
