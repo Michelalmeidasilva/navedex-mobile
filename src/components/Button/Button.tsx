@@ -33,7 +33,7 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   const { colors } = theme;
 
   const textColor = useMemo(
-    () => (variant === PRIMARY ? 'white' : variant === SECONDARY ? 'black' : 'gray.n500'),
+    () => (variant === SECONDARY || DISABLED ? 'white' : 'black'),
     [variant, disabled, colors]
   );
 
@@ -66,8 +66,8 @@ const StyledButton: FC<StyledButtonProps> = styled.TouchableOpacity(
         borderColor: 'black'
       },
       [DISABLED]: {
-        backgroundColor: 'gray',
-        borderColor: 'gray'
+        backgroundColor: 'gray.n500',
+        borderColor: 'transparent'
       }
     }
   }),
