@@ -11,7 +11,7 @@ const PRIMARY = 'primary';
 const SECONDARY = 'secondary';
 const DISABLED = 'disabled';
 
-interface ButtonComponentProps extends ColumnProps, TouchableOpacityProps {
+export interface ButtonComponentProps extends ColumnProps, TouchableOpacityProps {
   title: string;
   icon?: string;
   variant: string;
