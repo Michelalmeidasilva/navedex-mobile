@@ -1,19 +1,29 @@
-import React, { FC, useEffect } from 'react';
+import React, {
+  ForwardRefRenderFunction,
+  useState,
+  MutableRefObject,
+  forwardRef,
+  useMemo
+} from 'react';
+
 import { TextInputProps, KeyboardTypeOptions } from 'react-native';
 import styled from 'styled-components/native';
-import { UseFormRegister } from 'react-hook-form';
 
-import { Column, ColumnProps, RowProps, Row, Text } from 'src/components';
+import { Column, ColumnProps, RowProps, Row, Text, Icon } from 'src/components';
+import { theme } from 'src/theme';
 
-interface InputComponentProps extends ColumnProps {
+export interface InputRef {
+  focus(): void;
+}
+
+export interface InputComponentProps extends ColumnProps {
   label?: string;
   error?: string;
-  name: string;
+  name?: string;
   value?: string;
   color?: string;
-  register?(): any;
-  actionButton?: boolean;
-  onChange(): any;
+  placeholder?: string;
+  onChangeText?(text: string): void;
   secureTextEntry?: boolean;
   labelBackground?: string;
   keyboardType?: KeyboardTypeOptions;
@@ -23,21 +33,30 @@ interface StyledInputProps extends TextInputProps {
   name?: string;
   error?: string;
   keyboardType?: KeyboardTypeOptions;
+  ref?: any;
 }
 
-const InputComponent: FC<InputComponentProps> = ({
-  label,
-  name,
-  value,
-  keyboardType,
-  actionButton,
-  onChange,
-  error,
-  register,
-  secureTextEntry,
-  color,
-  ...props
-}) => {
+const InputComponent: ForwardRefRenderFunction<InputRef, InputComponentProps> = (
+  {
+    label,
+    name,
+    value,
+    keyboardType,
+    onChangeText,
+    placeholder,
+    error,
+    secureTextEntry = false,
+    color,
+    ...props
+  },
+  ref
+) => {
+  const { colors } = theme;
+
+  const [isFocused, setIsFocused] = useState(false);
+
+  const getColorBorder = useMemo(() => (error ? colors.error : isFocused ? 'blue' : 'black'));
+
   return (
     <Column {...props}>
       {label && (
@@ -46,24 +65,34 @@ const InputComponent: FC<InputComponentProps> = ({
         </Text>
       )}
 
-      <RowContainer bg={color}>
+      <ContainerInput borderColor={getColorBorder} {...props}>
         <StyledInput
           name={name}
           value={value}
           error={error}
+          placeholder={placeholder}
           keyboardType={keyboardType}
-          onChangeText={onChange}
+          onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
+          onBlur={() => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
+          ref={ref}
         />
-      </RowContainer>
+      </ContainerInput>
+
+      {error && (
+        <Text mt='5px' variant='small' color={colors.error} marginLeft='7px'>
+          {error}
+        </Text>
+      )}
     </Column>
   );
 };
 
-const RowContainer = styled.View<RowProps>`
+const ContainerInput = styled.View<ColumnProps>`
   align-items: center;
   flex-direction: row;
-  border: 1px solid #424242;
+  border: 1px solid ${props => props.borderColor};
   border-radius: 0px;
   background-color: transparent;
 `;
@@ -79,4 +108,4 @@ const StyledInput = styled.TextInput.attrs(({ ...props }) => ({
   background-color: transparent;
 `;
 
-export default InputComponent;
+export default forwardRef(InputComponent);
