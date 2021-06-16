@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.5.2",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/cli": "^5.0.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -31,7 +32,8 @@
     "react-native-screens": "^3.2.0",
     "react-native-svg": "^12.1.0",
     "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
