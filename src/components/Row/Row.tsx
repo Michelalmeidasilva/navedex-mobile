@@ -25,11 +25,11 @@ export interface RowProps extends StyledProps {
 }
 
 const RowComponent: FC<RowProps> = styled.View<RowProps>(
+  { flexDirection: 'row' },
   space,
   layout,
   color,
-  flexbox,
-  'flex-direction:row'
+  flexbox
 );
 
 export default RowComponent;
