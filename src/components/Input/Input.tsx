@@ -1,15 +1,9 @@
-import React, {
-  ForwardRefRenderFunction,
-  useState,
-  MutableRefObject,
-  forwardRef,
-  useMemo
-} from 'react';
+import React, { ForwardRefRenderFunction, useState, forwardRef, useMemo } from 'react';
 
 import { TextInputProps, KeyboardTypeOptions } from 'react-native';
 import styled from 'styled-components/native';
 
-import { Column, ColumnProps, RowProps, Row, Text, Icon } from 'src/components';
+import { Column, ColumnProps, Text } from 'src/components';
 import { theme } from 'src/theme';
 
 export interface InputRef {
@@ -21,32 +15,27 @@ export interface InputComponentProps extends ColumnProps {
   error?: string;
   name?: string;
   value?: string;
-  color?: string;
   placeholder?: string;
   onChangeText?(text: string): void;
   secureTextEntry?: boolean;
-  labelBackground?: string;
   keyboardType?: KeyboardTypeOptions;
 }
 
 interface StyledInputProps extends TextInputProps {
-  name?: string;
   error?: string;
   keyboardType?: KeyboardTypeOptions;
-  ref?: any;
 }
 
 const InputComponent: ForwardRefRenderFunction<InputRef, InputComponentProps> = (
   {
     label,
+    error,
     name,
     value,
-    keyboardType,
-    onChangeText,
     placeholder,
-    error,
+    onChangeText,
     secureTextEntry = false,
-    color,
+    keyboardType,
     ...props
   },
   ref
@@ -97,9 +86,7 @@ const ContainerInput = styled.View<ColumnProps>`
   background-color: transparent;
 `;
 
-const StyledInput = styled.TextInput.attrs(({ ...props }) => ({
-  ...props
-}))<StyledInputProps>`
+const StyledInput = styled.TextInput<StyledInputProps>`
   height: 40px;
   width: 100%;
   padding: 8px;
