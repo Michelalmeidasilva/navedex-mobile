@@ -33,7 +33,7 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   const { colors } = theme;
 
   const textColor = useMemo(
-    () => (variant === SECONDARY || DISABLED ? 'white' : 'black'),
+    () => (variant === PRIMARY ? 'white' : 'black'),
     [variant, disabled, colors]
   );
 
@@ -45,7 +45,7 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
         <Row>
           {icon && <Icon icon={icon} marginRight={13} color={textColor} />}
 
-          <Text variant='small' color={textColor} fontWeight={600} lineHeight='24px'>
+          <Text variant='small' color={textColor} fontWeight={700} lineHeight='24px'>
             {title}
           </Text>
         </Row>
