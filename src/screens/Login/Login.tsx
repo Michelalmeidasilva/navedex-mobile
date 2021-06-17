@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { ScrollView, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Input, Column, Button } from 'src/components';
+import { Input, Column, Button, Modal } from 'src/components';
 import { LoginSchema } from 'src/utils';
 import { CredentialsParams } from 'src/context';
 import { IMAGES_URL } from 'src/constants';
@@ -17,6 +17,10 @@ interface FormLoginData {
 }
 
 const Login: FC = () => {
+  const [displayErrorAlert, setDisplayErrorAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const {
     control,
     handleSubmit,
@@ -32,8 +36,16 @@ const Login: FC = () => {
   });
 
   const handleLogin = (credentials: CredentialsParams) => {
-    console.log(credentials);
+    try {
+      console.log(credentials);
+    } catch (error) {
+      setErrorMessage(error?.message);
+      setDisplayErrorAlert(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <Column p='16px'>
       <KeyboardAwareScrollView
@@ -83,6 +95,16 @@ const Login: FC = () => {
             mt={40}
             title='Entrar'
             onPress={handleSubmit(handleLogin)}
+          />
+
+          <Modal
+            open={displayErrorAlert}
+            title='Alerta!'
+            description={errorMessage}
+            firstButton={{
+              label: 'Fechar',
+              action: () => setDisplayErrorAlert(false)
+            }}
           />
         </ScrollView>
       </KeyboardAwareScrollView>
