@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
+
 import { ScrollView, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { Input, Column, Button } from 'src/components';
 import { LoginSchema } from 'src/utils';
-import { Input, Column, Text, Button } from 'src/components';
+import { CredentialsParams } from 'src/context';
+import { IMAGES_URL } from 'src/constants';
 
 interface FormLoginData {
   email: string;
@@ -28,7 +31,7 @@ const Login: FC = () => {
     }
   });
 
-  const handleLogin = (credentials: any) => {
+  const handleLogin = (credentials: CredentialsParams) => {
     console.log(credentials);
   };
   return (
@@ -39,14 +42,16 @@ const Login: FC = () => {
         showsHorizontalScrollIndicator={false}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/*image*/}
+          <Column alignItems='center' mt={106}>
+            <Image style={{ width: 156, height: 40 }} source={IMAGES_URL.logo} />
+          </Column>
 
           <Controller
             name='email'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
               <Input
-                mt='26px'
+                mt='56px'
                 label='E-mail'
                 placeholder='E-mail'
                 keyboardType='email-address'
