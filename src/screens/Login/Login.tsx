@@ -93,6 +93,7 @@ const Login: FC = () => {
             variant='primary'
             accessibilityLabel='text'
             mt={40}
+            isLoading={isLoading}
             title='Entrar'
             onPress={handleSubmit(handleLogin)}
           />
