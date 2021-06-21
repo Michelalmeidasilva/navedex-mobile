@@ -6,9 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Config from 'react-native-config';
-
-import { Input, Column, Icon, Button } from 'src/components';
+import { Input, Column, Button } from 'src/components';
 import { LoginSchema } from 'src/utils';
 import { CredentialsParams } from 'src/context';
 import { IMAGES_URL } from 'src/constants';
@@ -26,7 +24,6 @@ const Login: FC = () => {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<FormLoginData>({
     reValidateMode: 'onSubmit',
@@ -100,15 +97,6 @@ const Login: FC = () => {
             title='Entrar'
             onPress={handleSubmit(handleLogin)}
           />
-
-          {/* <Button
-            variant='secondary'
-            accessibilityLabel='Não possui conta? clique aqui para criar uma nova conta'
-            mt={20}
-            isLoading={isLoading}
-            title='Criar nova conta'
-            onPress={handleSubmit(handleLogin)}
-          /> */}
         </ScrollView>
       </KeyboardAwareScrollView>
     </Column>

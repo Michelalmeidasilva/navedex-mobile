@@ -1,10 +1,16 @@
 import React, { FC, useState, useEffect, useContext, createContext } from 'react';
-import { AxiosResponse } from 'axios';
 
 import { Modal, Text, Column } from 'src/components';
-import { loginUser, getMe } from 'src/services';
+import { loginUser } from 'src/services';
 import { API_MESSAGES } from 'src/constants';
-import { getTokenStorage, setTokenStorage, clearTokenStorage } from 'src/utils';
+import {
+  getTokenStorage,
+  setTokenStorage,
+  clearTokenStorage,
+  setUserStorage,
+  getUserStorage,
+  clearUserStorage
+} from 'src/utils';
 
 export interface User {
   email: string;
@@ -41,18 +47,16 @@ const UserProvider: FC = ({ children }) => {
   const fetchUser: () => Promise<void> = async () => {
     try {
       setIsFetchingUser(true);
+
       const token = await getTokenStorage();
+      const user = await getUserStorage();
 
-      console.log('token', token);
-      if (token) {
-        const meUser: any = await getMe();
-
-        if (meUser) {
-          setUser(JSON.parse(meUser) as User);
-        }
+      if (token && user) {
+        setUser(JSON.parse(user) as User);
       }
+      console.log('user', user);
     } catch (error) {
-      console.log('error', error?.message);
+      console.log('error', error);
     } finally {
       setIsFetchingUser(false);
     }
@@ -60,21 +64,31 @@ const UserProvider: FC = ({ children }) => {
 
   const login: (credentials: CredentialsParams) => Promise<void> = async credentials => {
     try {
-      const { token }: any = await loginUser(credentials);
+      console.log(credentials);
+
+      const { token, id, email }: any = await loginUser(credentials);
+
       if (token) {
         setTokenStorage(token);
+        setUserStorage({
+          id,
+          email
+        });
         await fetchUser();
       }
     } catch (error) {
+      console.log('error', error);
       setModalMessage(
         API_MESSAGES[error?.message as keyof typeof API_MESSAGES] || 'Erro ao se autenticar'
       );
+
       setDisplayModal(true);
     }
   };
 
   const logout = async () => {
     await clearTokenStorage();
+    await clearUserStorage();
     setUser(null);
   };
 
