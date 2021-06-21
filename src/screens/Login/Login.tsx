@@ -6,10 +6,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Input, Column, Button, Modal } from 'src/components';
+import Config from 'react-native-config';
+
+import { Input, Column, Icon, Button } from 'src/components';
 import { LoginSchema } from 'src/utils';
 import { CredentialsParams } from 'src/context';
 import { IMAGES_URL } from 'src/constants';
+import { useUser } from 'src/context';
 
 interface FormLoginData {
   email: string;
@@ -17,9 +20,8 @@ interface FormLoginData {
 }
 
 const Login: FC = () => {
-  const [displayErrorAlert, setDisplayErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { login } = useUser();
 
   const {
     control,
@@ -35,12 +37,12 @@ const Login: FC = () => {
     }
   });
 
-  const handleLogin = (credentials: CredentialsParams) => {
+  const handleLogin = async (credentials: CredentialsParams): Promise<void> => {
     try {
-      console.log(credentials);
-    } catch (error) {
-      setErrorMessage(error?.message);
-      setDisplayErrorAlert(true);
+      setIsLoading(true);
+      await login(credentials);
+    } catch (err) {
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
@@ -83,6 +85,7 @@ const Login: FC = () => {
                 label='Senha'
                 placeholder='Senha'
                 value={value}
+                secureTextEntry
                 error={errors.password?.message}
                 onChangeText={onChange}
               />
@@ -98,15 +101,14 @@ const Login: FC = () => {
             onPress={handleSubmit(handleLogin)}
           />
 
-          <Modal
-            open={displayErrorAlert}
-            title='Alerta!'
-            description={errorMessage}
-            firstButton={{
-              label: 'Fechar',
-              action: () => setDisplayErrorAlert(false)
-            }}
-          />
+          {/* <Button
+            variant='secondary'
+            accessibilityLabel='Não possui conta? clique aqui para criar uma nova conta'
+            mt={20}
+            isLoading={isLoading}
+            title='Criar nova conta'
+            onPress={handleSubmit(handleLogin)}
+          /> */}
         </ScrollView>
       </KeyboardAwareScrollView>
     </Column>
