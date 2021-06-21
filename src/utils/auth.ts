@@ -1,10 +1,20 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { ASYNC_STORAGE_TOKEN } from 'src/constants';
+import { ASYNC_STORAGE_TOKEN, ASYNC_STORAGE_USER } from 'src/constants';
+import { User } from 'src/context';
 
-export const getToken = (): Promise<string | null> => AsyncStorage.getItem(ASYNC_STORAGE_TOKEN);
+export const getTokenStorage = (): Promise<string | null> =>
+  AsyncStorage.getItem(ASYNC_STORAGE_TOKEN);
 
-export const setToken = (token: string): Promise<void> =>
+export const setTokenStorage = (token: string): Promise<void> =>
   AsyncStorage.setItem(ASYNC_STORAGE_TOKEN, token);
 
-export const clearToken = (): Promise<void> => AsyncStorage.removeItem(ASYNC_STORAGE_TOKEN);
+export const clearTokenStorage = (): Promise<void> => AsyncStorage.removeItem(ASYNC_STORAGE_TOKEN);
+
+export const getUserStorage = (): Promise<string | null> =>
+  AsyncStorage.getItem(ASYNC_STORAGE_USER);
+
+export const setUserStorage = (user: User): Promise<void> =>
+  AsyncStorage.setItem(ASYNC_STORAGE_USER, JSON.stringify(user));
+
+export const clearUserStorage = (): Promise<void> => AsyncStorage.removeItem(ASYNC_STORAGE_TOKEN);
