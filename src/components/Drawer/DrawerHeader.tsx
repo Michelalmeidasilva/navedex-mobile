@@ -19,7 +19,7 @@ const DrawerHeader: FC = () => {
         </TouchableOpacity>
       </Row>
 
-      <Row flex={6}>
+      <Row flex={7}>
         <Image style={{ width: 156, height: 40, alignSelf: 'center' }} source={IMAGES_URL.logo} />
       </Row>
     </RowContainer>
