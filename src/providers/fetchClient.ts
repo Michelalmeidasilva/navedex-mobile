@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 
-import { getToken } from 'src/utils';
+import { getTokenStorage } from 'src/utils';
 
 const provider = axios.create({
-  baseURL: Config.__API_URL
+  baseURL: Config.API_URL
 });
 
 provider.interceptors.request.use(async ({ headers, ...config }) => {
-  const token = await getToken();
+  const token = await getTokenStorage();
 
   return {
     ...config,
