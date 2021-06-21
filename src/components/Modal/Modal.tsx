@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import styled from 'styled-components/native';
 import { Modal, ViewProps, TouchableWithoutFeedback } from 'react-native';
 
-import { Text, ButtonComponentProps, Column, Row, ColumnProps } from 'src/components';
+import { Text, ButtonComponentProps, Column, Row, ColumnProps, Icon } from 'src/components';
 
 interface ModalComponent {
   handleClose(): void;
@@ -40,6 +40,9 @@ const ModalComponent: FC<any> = ({
                   {title}
                 </Text>
               )}
+              <TouchableWithoutFeedback style={{ alignSelf: 'flex-end' }} onPress={handleClose}>
+                <Icon icon='clear' color='black' width={14} height={14} />
+              </TouchableWithoutFeedback>
             </Row>
 
             <Column mt='16px'>
@@ -67,7 +70,6 @@ const Container: FC<ViewProps> = styled.View`
   background: rgba(0, 0, 0, 0.7);
   flex: 1;
   justify-content: center;
-  align-items: flex-start;
 `;
 
 const Content: FC<ColumnProps> = styled(Column)`
