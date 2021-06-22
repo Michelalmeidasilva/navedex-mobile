@@ -12,7 +12,7 @@ const DrawerHeader: FC = () => {
   const { colors } = theme;
 
   return (
-    <RowContainer bg={colors.secondary}>
+    <RowContainer bg={colors.background}>
       <Row flex={3}>
         <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
           <Icon icon='hamburguer' color={colors.black} width={35} height={14} pl={17} pt={25} />
