@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, FlatList } from 'react-native';
 import { Row, Column, Text, Button, Icon } from 'src/components';
 import styled from 'styled-components/native';
 
@@ -58,41 +58,39 @@ const NaversListView = () => {
 
   useEffect(() => {}, [data]);
 
+  const renderNaver = ({ item }) => {
+    const { id, name, jobRole, url } = item;
+    return (
+      <Column key={id} mt={36}>
+        <Image source={{ uri: url }} />
+        <Column>
+          <Text>{name}</Text>
+
+          <Text>{jobRole}</Text>
+          <Row>
+            <Icon icon='edit' color='black' width={14} height={18}></Icon>
+            {/* <Icon icon='trash' color='black' width={14} height={18}></Icon> */}
+          </Row>
+        </Column>
+      </Column>
+    );
+  };
   return (
     <Column>
-      {data &&
-        data.map(({ name, url, id, jobRole }) => (
-          <Container key={id}>
-            <Cover>
-              <Image source={{ uri: url }} />
-            </Cover>
-            <Content>
-              <Text>{name}</Text>
-
-              <Text>{jobRole}</Text>
-              {/* <Row>
-              <Icon icon='edit' width={14} height={18}></Icon>
-              <Icon icon='trash' width={14} height={18}></Icon>
-            </Row> */}
-            </Content>
-          </Container>
-        ))}
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={data}
+        numColumns={2}
+        keyExtractor={(item, index) => item.id}
+        renderItem={renderNaver}
+      />
     </Column>
   );
 };
 
 const Image = styled.Image`
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.View`
-  width: 100%;
-  height: 158px;
-  padding-horizontal: 16px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  width: 237;
+  height: 158;
 `;
 
 const Content = styled.View`
@@ -100,13 +98,6 @@ const Content = styled.View`
   flex-direction: column;
   align-items: center;
   height: 60px;
-`;
-
-const Cover = styled.View`
-  width: 100%;
-  height: 120px;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
 `;
 
 export default NaversListView;
