@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import styled from 'styled-components/native';
-import { Modal, ViewProps, TouchableWithoutFeedback } from 'react-native';
+import { Modal, ViewProps, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
-import { Text, ButtonComponentProps, Column, Row, ColumnProps } from 'src/components';
+import { Text, ButtonComponentProps, Column, Row, ColumnProps, Icon } from 'src/components';
 
 interface ModalComponent {
   handleClose(): void;
@@ -34,12 +34,16 @@ const ModalComponent: FC<any> = ({
           <Content {...props}>
             {children}
 
-            <Row>
+            <Row justifyContent='space-between' mb={40}>
               {title && (
-                <Text mt='16px' fontSize='22px' lineHeight='32px' fontWeight={700} variant='medium'>
+                <Text lineHeight='32px' fontWeight={700} variant='medium'>
                   {title}
                 </Text>
               )}
+
+              <TouchableOpacity onPress={handleClose}>
+                <Icon icon='clear' width={15} height={15} />
+              </TouchableOpacity>
             </Row>
 
             <Column mt='16px'>
@@ -67,7 +71,6 @@ const Container: FC<ViewProps> = styled.View`
   background: rgba(0, 0, 0, 0.7);
   flex: 1;
   justify-content: center;
-  align-items: flex-start;
 `;
 
 const Content: FC<ColumnProps> = styled(Column)`

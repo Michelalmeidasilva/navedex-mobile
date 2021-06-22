@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { ColumnProps, Column } from 'src/components';
 
-import { SVGTrash, SVGEdit, SVGHamburguer, SVGError } from 'src/assets/icons';
+import { SVGTrash, SVGEdit, SVGClear, SVGHamburguer, SVGError } from 'src/assets/icons';
 export interface SVGProps {
   width?: number;
   height?: number;
@@ -27,6 +27,7 @@ const HAMBURGUER = 'hamburguer';
 const ERROR = 'error';
 const EDIT = 'edit';
 const TRASH = 'thrash';
+const CLEAR = 'clear';
 
 const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...props }): any => {
   const renderIcon = (params: RenderIconProps): JSX.Element | undefined => {
@@ -44,6 +45,9 @@ const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...
 
       case EDIT:
         return <SVGEdit />;
+
+      case CLEAR:
+        return <SVGClear />;
 
       default:
         throw new InvalidNameIconError();
