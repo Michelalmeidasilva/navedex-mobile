@@ -1,18 +1,30 @@
 import React, { FC } from 'react';
 
-import { StatusBar } from 'react-native';
+import { StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 
-import UnauthenticadedApp from 'src/navigators/UnauthenticadedApp';
+import { UnauthenticatedApp, AuthenticatedApp } from 'src/navigators';
 import { theme } from 'src/theme';
+import { useUser, AppProvider } from 'src/context';
+import { Column } from 'src/components';
 
 const App: FC = () => {
+  const { isFetchingUser, user } = useUser();
+
+  if (isFetchingUser) {
+    return (
+      <Column alignItems='center' bg='gray.n100' flex={1} justifyContent='center'>
+        <ActivityIndicator size='large' color={theme.colors.black} />
+      </Column>
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <UnauthenticadedApp />
+        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       </NavigationContainer>
     </SafeAreaProvider>
   );
@@ -20,8 +32,10 @@ const App: FC = () => {
 
 export default (): JSX.Element => (
   <ThemeProvider theme={theme}>
-    <StatusBar backgroundColor={theme.colors.secondary} barStyle='dark-content' />
+    <AppProvider>
+      <StatusBar backgroundColor={theme.colors.secondary} barStyle='dark-content' />
 
-    <App />
+      <App />
+    </AppProvider>
   </ThemeProvider>
 );

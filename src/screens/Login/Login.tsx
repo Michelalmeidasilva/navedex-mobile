@@ -6,10 +6,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Input, Column, Button, Modal } from 'src/components';
+import { Input, Column, Button } from 'src/components';
 import { LoginSchema } from 'src/utils';
 import { CredentialsParams } from 'src/context';
 import { IMAGES_URL } from 'src/constants';
+import { useUser } from 'src/context';
 
 interface FormLoginData {
   email: string;
@@ -17,14 +18,12 @@ interface FormLoginData {
 }
 
 const Login: FC = () => {
-  const [displayErrorAlert, setDisplayErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { login } = useUser();
 
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<FormLoginData>({
     reValidateMode: 'onSubmit',
@@ -35,12 +34,12 @@ const Login: FC = () => {
     }
   });
 
-  const handleLogin = (credentials: CredentialsParams) => {
+  const handleLogin = async (credentials: CredentialsParams): Promise<void> => {
     try {
-      console.log(credentials);
-    } catch (error) {
-      setErrorMessage(error?.message);
-      setDisplayErrorAlert(true);
+      setIsLoading(true);
+      await login(credentials);
+    } catch (err) {
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
@@ -83,6 +82,7 @@ const Login: FC = () => {
                 label='Senha'
                 placeholder='Senha'
                 value={value}
+                secureTextEntry
                 error={errors.password?.message}
                 onChangeText={onChange}
               />
@@ -96,16 +96,6 @@ const Login: FC = () => {
             isLoading={isLoading}
             title='Entrar'
             onPress={handleSubmit(handleLogin)}
-          />
-
-          <Modal
-            open={displayErrorAlert}
-            title='Alerta!'
-            description={errorMessage}
-            firstButton={{
-              label: 'Fechar',
-              action: () => setDisplayErrorAlert(false)
-            }}
           />
         </ScrollView>
       </KeyboardAwareScrollView>
