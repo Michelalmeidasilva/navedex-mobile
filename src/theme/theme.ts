@@ -6,7 +6,7 @@ export default {
     warning: '#F49F14',
     success: '#43A047',
     primary: '#212121',
-    background: '#ffffff',
+    background: '#FAFAFA',
     secondary: '#ffffff',
     gray: {
       n50: '#FAFAFA',
