@@ -26,7 +26,7 @@ interface IconComponentProps extends ColumnProps {
 const HAMBURGUER = 'hamburguer';
 const ERROR = 'error';
 const EDIT = 'edit';
-const TRASH = 'thrash';
+const TRASH = 'trash';
 const CLEAR = 'clear';
 
 const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...props }): any => {
