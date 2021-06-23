@@ -1,1 +1,1 @@
-export { default as NaversListView } from './NaversListView';
+export { default as NaverView } from './NaverView';

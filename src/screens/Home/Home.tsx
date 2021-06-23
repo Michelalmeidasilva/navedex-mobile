@@ -1,20 +1,20 @@
 import React, { FC, useState, useEffect } from 'react';
 
 import { ScrollView, View } from 'react-native';
-import { Row, Column, Text, Button, Icon, NaversListView } from 'src/components';
+import { Row, Column, Text, Button, Icon, NaverView } from 'src/components';
 import styled from 'styled-components/native';
 
 const Home: FC = () => {
   return (
-    <Column pt='32px' pr='16px' pl='18px'>
-      <Row>
-        <Column flex={5}>
-          <Text width='50%' fontSize='22px' lineHeight='32px' fontWeight={600}>
+    <Column pt='32px'>
+      <Row pr='16px' pl='18px'>
+        <Column width='50%'>
+          <Text fontSize='22px' lineHeight='32px' fontWeight={600}>
             Navers
           </Text>
         </Column>
 
-        <Column flex={5}>
+        <Column width='50%'>
           <Button
             title='Adicionar Naver'
             accessibilityLabel='Clique no botão para adicionar um naver'
@@ -23,7 +23,7 @@ const Home: FC = () => {
         </Column>
       </Row>
 
-      <NaversListView />
+      <NaverView />
     </Column>
   );
 };

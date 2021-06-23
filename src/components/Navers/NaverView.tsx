@@ -60,28 +60,37 @@ const NaversListView = () => {
 
   const renderNaver = ({ item }) => {
     const { id, name, jobRole, url } = item;
+
     return (
-      <Column key={id} mt={36}>
+      <Column key={id} mt='28px'>
         <Image source={{ uri: url }} />
         <Column>
-          <Text>{name}</Text>
+          <Text variant='small' lineHeight='20px' mt='8px' fontWeight={700}>
+            {name}
+          </Text>
 
-          <Text>{jobRole}</Text>
-          <Row>
-            <Icon icon='edit' color='black' width={14} height={18}></Icon>
-            {/* <Icon icon='trash' color='black' width={14} height={18}></Icon> */}
+          <Text variant='small' mt='4px'>
+            {jobRole}
+          </Text>
+
+          <Row mt='10px'>
+            <Icon ml='5px' icon='trash'></Icon>
+            <Icon ml='20px' icon='edit'></Icon>
           </Row>
         </Column>
       </Column>
     );
   };
+
+  console.log(data);
   return (
     <Column>
       <FlatList
+        columnWrapperStyle={{ justifyContent: 'space-around' }}
         showsVerticalScrollIndicator={false}
         data={data}
         numColumns={2}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={item => item.id}
         renderItem={renderNaver}
       />
     </Column>
@@ -89,15 +98,8 @@ const NaversListView = () => {
 };
 
 const Image = styled.Image`
-  width: 237;
-  height: 158;
-`;
-
-const Content = styled.View`
-  padding-top: 10px;
-  flex-direction: column;
-  align-items: center;
-  height: 60px;
+  height: 180px;
+  width: 200px;
 `;
 
 export default NaversListView;
