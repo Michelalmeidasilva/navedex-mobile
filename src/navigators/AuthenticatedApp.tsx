@@ -6,7 +6,7 @@ import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { theme } from 'src/theme';
 import { DrawerComponent, DrawerHeader } from 'src/components';
-import { Home } from 'src/screens';
+import { Naver } from 'src/screens';
 
 const ScreenOptions = (): StackNavigationOptions => ({
   headerTintColor: theme.colors.black,
@@ -20,8 +20,8 @@ const Stack = createStackNavigator();
 
 const AuthenticatedAppStack = () => {
   return (
-    <Stack.Navigator initialRouteName='Home' screenOptions={ScreenOptions}>
-      <Stack.Screen name='Home' component={Home} />
+    <Stack.Navigator initialRouteName='Naver' screenOptions={ScreenOptions}>
+      <Stack.Screen name='Naver' component={Naver} />
     </Stack.Navigator>
   );
 };

@@ -4,7 +4,7 @@ import Config from 'react-native-config';
 import { getTokenStorage } from 'src/utils';
 
 const provider = axios.create({
-  baseURL: Config.API_URL
+  baseURL: 'https://navedex-api.herokuapp.com/v1/'
 });
 
 provider.interceptors.request.use(async ({ headers, ...config }) => {
