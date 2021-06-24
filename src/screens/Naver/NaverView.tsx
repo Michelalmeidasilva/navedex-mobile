@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
 
-import { Row, Column, Text, Modal, Button, NaverCard } from 'src/components';
-import { getNavers, NaverData } from 'src/services';
+import { Row, Column, Text, Modal, Button, NaverCard, NaverData } from 'src/components';
+import { getNavers } from 'src/services';
 
 const NaverView: FC = () => {
   const [data, setData] = useState<NaverData[]>([]);

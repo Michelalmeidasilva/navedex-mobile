@@ -1,7 +1,16 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import { Row, Column, Text, Icon, RowProps } from 'src/components';
-import { NaverData } from 'src/services';
+export interface NaverData {
+  id: any;
+  name: string;
+  admissionDate: string;
+  job_role: string;
+  user_id: string;
+  project: string;
+  birthdate: string;
+  url: string;
+}
 
 interface NaverCardProps extends RowProps {
   item: NaverData;
