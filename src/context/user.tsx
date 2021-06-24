@@ -110,8 +110,12 @@ const UserProvider: FC = ({ children }) => {
         {children}
       </UserContext.Provider>
 
-      <Modal isVisible={displayModal} handleClose={(): void => setDisplayModal(false)}>
-        <Column>
+      <Modal
+        title='Erro ao se autenticar'
+        isVisible={displayModal}
+        handleClose={(): void => setDisplayModal(false)}
+      >
+        <Column justifyContent='center' alignContent='center' p='15px'>
           <Text color='black'>{modalMessage}</Text>
         </Column>
       </Modal>

@@ -26,7 +26,7 @@ interface IconComponentProps extends ColumnProps {
 const HAMBURGUER = 'hamburguer';
 const ERROR = 'error';
 const EDIT = 'edit';
-const TRASH = 'thrash';
+const TRASH = 'trash';
 const CLEAR = 'clear';
 
 const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...props }): any => {
@@ -41,13 +41,13 @@ const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...
         return <SVGError {...rest} />;
 
       case TRASH:
-        return <SVGTrash />;
+        return <SVGTrash {...rest} />;
 
       case EDIT:
-        return <SVGEdit />;
+        return <SVGEdit {...rest} />;
 
       case CLEAR:
-        return <SVGClear />;
+        return <SVGClear {...rest} />;
 
       default:
         throw new InvalidNameIconError();

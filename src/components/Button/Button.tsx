@@ -13,7 +13,9 @@ const DISABLED = 'disabled';
 
 export interface ButtonComponentProps extends ColumnProps, TouchableOpacityProps {
   title: string;
-  icon?: string;
+  nameIcon?: string;
+  widthIcon: number;
+  heightIcon: number;
   variant: string;
   disabled?: boolean;
   isLoading?: boolean;
@@ -27,7 +29,9 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   variant,
   disabled,
   isLoading,
-  icon,
+  nameIcon: iconName,
+  widthIcon: iconWidth,
+  heightIcon: iconHeight,
   ...props
 }) => {
   const { colors } = theme;
@@ -43,7 +47,15 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
 
       {!isLoading && (
         <Row>
-          {icon && <Icon icon={icon} marginRight={13} color={textColor} />}
+          {iconName && (
+            <Icon
+              icon={iconName}
+              width={iconWidth}
+              height={iconHeight}
+              marginRight={13}
+              color={textColor}
+            />
+          )}
 
           <Text variant='small' color={textColor} fontWeight={700} lineHeight='24px'>
             {title}
