@@ -14,8 +14,8 @@ const DISABLED = 'disabled';
 export interface ButtonComponentProps extends ColumnProps, TouchableOpacityProps {
   title: string;
   nameIcon?: string;
-  widthIcon: number;
-  heightIcon: number;
+  widthIcon?: number;
+  heightIcon?: number;
   variant: string;
   disabled?: boolean;
   isLoading?: boolean;
