@@ -10,6 +10,10 @@ import { theme } from 'src/theme';
 import { useUser, AppProvider } from 'src/context';
 import { Column } from 'src/components';
 
+if (__DEV__) {
+  import('./../ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
 const App: FC = () => {
   const { isFetchingUser, user } = useUser();
 
