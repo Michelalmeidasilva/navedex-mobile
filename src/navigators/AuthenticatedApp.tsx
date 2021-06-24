@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { theme } from 'src/theme';
-import { DrawerComponent, DrawerHeader, Icon } from 'src/components';
+import { DrawerComponent, DrawerHeader } from 'src/components';
 import { Home } from 'src/screens';
 
 const ScreenOptions = (): StackNavigationOptions => ({

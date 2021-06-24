@@ -32,19 +32,19 @@ const ModalComponent: FC<any> = ({
       <Container>
         <TouchableWithoutFeedback>
           <Content {...props}>
-            {children}
-
-            <Row justifyContent='space-between' mb={40}>
+            <Row justifyContent='space-between' p='10px' alignItems='center'>
               {title && (
-                <Text lineHeight='32px' fontWeight={700} variant='medium'>
+                <Text fontWeight={700} variant='medium'>
                   {title}
                 </Text>
               )}
 
               <TouchableOpacity onPress={handleClose}>
-                <Icon icon='clear' width={15} height={15} />
+                <Icon icon='clear' color='black' width={15} height={15} />
               </TouchableOpacity>
             </Row>
+
+            {children}
 
             <Column mt='16px'>
               {description && (
@@ -70,6 +70,7 @@ const Container: FC<ViewProps> = styled.View`
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
   flex: 1;
+  padding: 10px;
   justify-content: center;
 `;
 
@@ -77,10 +78,7 @@ const Content: FC<ColumnProps> = styled(Column)`
   background: #fff;
   box-shadow: 0px 2px 4px rgba(33, 33, 33, 0.2);
   max-height: 216px;
-  padding-left: 24px;
-  padding-bottom: 24px;
-  padding-right: 24px;
-  padding-top: 16px;
+  height: 180px;
   width: 320px;
 `;
 
