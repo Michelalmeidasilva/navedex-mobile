@@ -19,3 +19,12 @@ export const NaverAddSchema = Yup.object().shape({
   project: Yup.string().required(),
   birthdate: Yup.string().required()
 });
+
+export const NaverEditSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  job_role: Yup.string().required(),
+  admission_date: Yup.string().required(),
+  url: Yup.string().required(),
+  project: Yup.string().required(),
+  birthdate: Yup.string().required()
+});

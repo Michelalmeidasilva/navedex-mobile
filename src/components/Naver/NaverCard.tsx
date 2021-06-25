@@ -25,6 +25,7 @@ interface NaverCardProps extends RowProps {
 const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
   const { id, name, job_role: jobRole, url } = item;
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+  const navigation = useNavigation();
 
   return (
     <Column key={id} {...props}>
@@ -49,8 +50,10 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
           <Icon ml='5px' icon='trash' color='black' width={14} height={18} />
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41} />
+        <TouchableOpacity
+          onPress={() => navigation.push('NaverEdit', { editForm: true, paramsId: id })}
+        >
+          <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41}></Icon>
         </TouchableOpacity>
       </Row>
 
