@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react';
-import { useEffect } from 'react';
 import { Row, Column, Text, Button, Modal } from 'src/components';
 import { deleteUser } from 'src/services';
 
@@ -12,14 +11,17 @@ const NaverDeleteModal: FC = ({ idUser, isVisible, setIsVisible }) => {
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
+
       await deleteUser(idUser);
 
       setIsVisible(false);
+
       setTitleModalMessage('Naver Excluido');
       setModalMessage('Naver excluido com sucesso!');
       setIsModalMessageOpen(true);
     } catch (err) {
       setIsVisible(false);
+
       setModalMessage('Erro ao excluir o naver');
       setTitleModalMessage('Erro');
       setIsModalMessageOpen(true);
