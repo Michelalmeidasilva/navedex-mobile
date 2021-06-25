@@ -7,3 +7,6 @@ export const createNaver = (data): Promise<AxiosResponse<any>> => fetchClient.po
 
 export const getNaverById = (id: string): Promise<AxiosResponse<any>> =>
   fetchClient.get(`/navers/${id}`);
+
+export const updateNaverById = (id: string, data: any): Promise<AxiosResponse<any>> =>
+  fetchClient.put(`/navers/${id}`, data);

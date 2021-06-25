@@ -6,7 +6,7 @@ import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { theme } from 'src/theme';
 import { DrawerComponent, DrawerHeader } from 'src/components';
-import { NaverAdd, Naver, NaverDetails } from 'src/screens';
+import { NaverAdd, Naver, NaverDetails, NaverEdit } from 'src/screens';
 
 const ScreenOptions = (): StackNavigationOptions => ({
   headerTintColor: theme.colors.black,
@@ -24,6 +24,7 @@ const AuthenticatedAppStack = () => {
       <Stack.Screen name='Naver' component={Naver} />
       <Stack.Screen name='NaverAdd' component={NaverAdd} />
       <Stack.Screen name='NaverDetails' component={NaverDetails} />
+      <Stack.Screen name='NaverEdit' component={NaverEdit} />
     </Stack.Navigator>
   );
 };
