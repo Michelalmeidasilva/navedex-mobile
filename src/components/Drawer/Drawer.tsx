@@ -19,7 +19,7 @@ const DrawerComponent: FC<any> = ({ navigation }) => {
       <Column justifyContent='center' alignItems='center' flex={1}>
         <Column mb={60}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('Naver')}
             style={{ width: 198, height: 32, marginBottom: 24, alignItems: 'center' }}
           >
             <Text color='black' fontWeight={600} fontSize='22px' lineHeight='32px'>
