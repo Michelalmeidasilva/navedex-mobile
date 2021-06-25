@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Row, Column, Text, Modal, Button, NaverCard, NaverData } from 'src/components';
 import { getNavers } from 'src/services';
@@ -10,6 +11,7 @@ const NaverView: FC = () => {
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
   const [messageErrorModal, setMessageErrorModal] = useState<string>('');
   const [titleModalError, setTitleModalError] = useState<string>('');
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +46,7 @@ const NaverView: FC = () => {
               title='Adicionar Naver'
               accessibilityLabel='Clique no botão para adicionar um naver'
               variant='primary'
+              onPress={() => navigation.push('NaverAdd')}
             ></Button>
           </Column>
         </Row>

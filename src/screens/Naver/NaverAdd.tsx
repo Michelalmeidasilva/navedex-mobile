@@ -1,20 +1,19 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { useNavigation, DrawerActions } from '@react-navigation/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NaverAddSchema } from 'src/utils';
 
-import { Row, Column, Text, Modal, Input, Button } from 'src/components';
-import { NaverData } from 'src/services';
+import { Column, Text, Modal, Input, Button } from 'src/components';
+import { createNaver } from 'src/services';
+import { NaverAddSchema } from 'src/utils';
 
 interface FormNaverAdd {
   name: string;
   job_role: string;
-  // birthdate: string;
-  // admission_date: string;
+  birthdate: string;
+  admission_date: string;
   project: string;
   url: string;
 }
@@ -23,7 +22,7 @@ const NaverAdd: FC = () => {
   const [isAddingNaver, setIsAddingNaver] = useState<boolean>(false);
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
-
+  const [titleModal, setTitleModal] = useState<string>('');
   const {
     control,
     handleSubmit,
@@ -34,7 +33,7 @@ const NaverAdd: FC = () => {
     defaultValues: {
       name: '',
       job_role: '',
-      // admission_date: '',
+      birthdate: '',
       project: '',
       url: ''
     }
@@ -43,20 +42,20 @@ const NaverAdd: FC = () => {
   const handleAddNaver = async (naver: FormNaverAdd): Promise<void> => {
     try {
       setIsAddingNaver(true);
+
+      await createNaver(naver);
+
+      setTitleModal('Naver Adicionado');
       setMessageModal('Naver Adicionado com sucesso!');
       setIsVisibleModal(true);
     } catch (err) {
+      setTitleModal('Erro');
+      setMessageModal('Erro ao adicionar o naver');
       setIsVisibleModal(true);
-      setMessageModal('test');
     } finally {
       setIsAddingNaver(false);
     }
-    console.tron.log(naver);
   };
-
-  function formatDate(date) {
-    return new Date(date).toLocaleDateString();
-  }
 
   return (
     <KeyboardAwareScrollView>
@@ -96,7 +95,7 @@ const NaverAdd: FC = () => {
             )}
           />
 
-          {/* <Controller
+          <Controller
             name='birthdate'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
@@ -109,9 +108,9 @@ const NaverAdd: FC = () => {
                 onChangeText={onChange}
               />
             )}
-          /> */}
+          />
 
-          {/* <Controller
+          <Controller
             name='admission_date'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
@@ -124,7 +123,7 @@ const NaverAdd: FC = () => {
                 onChangeText={onChange}
               />
             )}
-          /> */}
+          />
 
           <Controller
             name='project'
@@ -169,7 +168,7 @@ const NaverAdd: FC = () => {
           />
 
           <Modal
-            title='Naver Adicionado'
+            title={titleModal}
             isVisible={isVisibleModal}
             handleClose={(): void => setIsVisibleModal(false)}
           >
