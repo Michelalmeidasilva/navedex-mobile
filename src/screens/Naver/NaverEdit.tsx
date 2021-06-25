@@ -61,14 +61,14 @@ const NaverEdit: FC = ({ route }) => {
     fetchData();
   }, []);
 
-  const handleUpdateNaver = async (naver: FormNaverAdd): Promise<void> => {
+  const handleUpdateNaver = async (naver: FormNaverEdit): Promise<void> => {
     try {
       setIsUpdatingNaver(true);
 
       await updateNaverById(naver.id, naver);
 
       setTitleModal('Naver Editado');
-      setMessageModal(`${JSON.stringify(naver, null, 2)}, Naver editado com sucesso!`);
+      setMessageModal('Naver editado com sucesso');
       setIsVisibleModal(true);
     } catch (err) {
       setTitleModal('Erro');

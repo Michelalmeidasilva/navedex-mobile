@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
-<<<<<<< HEAD
 import { Row, Column, Text, Icon, RowProps, NaverDeleteModal } from 'src/components';
 
 import { validateImage } from 'src/utils';
@@ -8,11 +7,6 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-=======
-import { Row, Column, Text, Icon, RowProps } from 'src/components';
-import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
->>>>>>> baa8bef (feat(form-edit): added naver edit screen)
 export interface NaverData {
   id: string;
   name: string;
