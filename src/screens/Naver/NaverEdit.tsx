@@ -65,7 +65,7 @@ const NaverEdit: FC = ({ route }) => {
     try {
       setIsUpdatingNaver(true);
 
-      // await updateNaverById(naver.id, naver);
+      await updateNaverById(naver.id, naver);
 
       setTitleModal('Naver Editado');
       setMessageModal(`${JSON.stringify(naver, null, 2)}, Naver editado com sucesso!`);
