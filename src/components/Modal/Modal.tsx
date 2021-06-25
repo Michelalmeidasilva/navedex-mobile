@@ -32,7 +32,7 @@ const ModalComponent: FC<any> = ({
       <Container>
         <TouchableWithoutFeedback>
           <Content {...props}>
-            <Row justifyContent='space-between' p='10px' alignItems='center'>
+            <Row justifyContent='space-between' pl='24px' pr='21px' py='16px' alignItems='center'>
               {title && (
                 <Text fontWeight={700} variant='medium'>
                   {title}
@@ -77,9 +77,8 @@ const Container: FC<ViewProps> = styled.View`
 const Content: FC<ColumnProps> = styled(Column)`
   background: #fff;
   box-shadow: 0px 2px 4px rgba(33, 33, 33, 0.2);
-  max-height: 216px;
-  height: 180px;
-  width: 320px;
+  max-height: 316px;
+  width: 328px;
 `;
 
 ModalComponent.defaultProps = {
