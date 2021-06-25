@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { TextProps } from 'react-native';
 import styled from 'styled-components/native';
+import { theme } from 'src/theme';
 
 import {
   space,
@@ -41,11 +42,13 @@ const TextComponent: FC<TextComponentProps> = styled.Text<TextComponentProps>(
         lineHeight: '27px'
       },
       regular: {
+        fontFamily: theme.font.family,
         fontSize: 16,
         lineHeight: '24px'
       },
       small: {
         fontSize: 14,
+        fontFamily: theme.font.family,
         lineHeight: '17px'
       },
       smaller: {
@@ -58,11 +61,11 @@ const TextComponent: FC<TextComponentProps> = styled.Text<TextComponentProps>(
       }
     }
   }),
+  position,
   space,
   layout,
   typography,
-  color,
-  position
+  color
 );
 
 export default TextComponent;

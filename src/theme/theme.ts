@@ -23,5 +23,8 @@ export default {
     blue: {
       n500: '#42526E'
     }
+  },
+  font: {
+    family: 'Montserrat'
   }
 };
