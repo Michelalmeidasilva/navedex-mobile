@@ -18,7 +18,7 @@ interface FormNaverEdit {
   url: string;
 }
 
-const NaverView: FC = ({ route }) => {
+const NaverEdit: FC = ({ route }) => {
   const [naver, setNaver] = useState<NaverData>();
   const [isUpdatingNaver, setIsUpdatingNaver] = useState<boolean>(false);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
@@ -209,4 +209,4 @@ const NaverView: FC = ({ route }) => {
   );
 };
 
-export default NaverView;
+export default NaverEdit;
