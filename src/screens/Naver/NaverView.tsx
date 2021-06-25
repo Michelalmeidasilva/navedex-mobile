@@ -8,7 +8,8 @@ const NaverView: FC = () => {
   const [data, setData] = useState<NaverData[]>([]);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
-  const [messageModal, setMessageModal] = useState<string>('');
+  const [messageErrorModal, setMessageErrorModal] = useState<string>('');
+  const [titleModalError, setTitleModalError] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +19,8 @@ const NaverView: FC = () => {
         const navers = await getNavers();
         setData(navers);
       } catch (err) {
-        setMessageModal('Erro ao carregar os navers');
+        setTitleModalError('Erro');
+        setMessageErrorModal('Erro ao carregar os navers');
         setIsErrorFetching(true);
       } finally {
         setIsFetchingData(false);
@@ -65,9 +67,13 @@ const NaverView: FC = () => {
           )}
         </Column>
 
-        <Modal isVisible={isErrorFetching} handleClose={(): void => setIsErrorFetching(false)}>
+        <Modal
+          title={titleModalError}
+          isVisible={isErrorFetching}
+          handleClose={(): void => setIsErrorFetching(false)}
+        >
           <Column>
-            <Text color='red'>{messageModal}</Text>
+            <Text color='red'>{messageErrorModal}</Text>
           </Column>
         </Modal>
       </Column>

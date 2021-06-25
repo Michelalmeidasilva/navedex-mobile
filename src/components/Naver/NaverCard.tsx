@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
-import { Row, Column, Text, Icon, RowProps } from 'src/components';
+import { Row, Column, Text, Icon, RowProps, NaverDeleteModal } from 'src/components';
+import { TouchableOpacity } from 'react-native';
 export interface NaverData {
   id: any;
   name: string;
@@ -18,6 +19,7 @@ interface NaverCardProps extends RowProps {
 
 const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
   const { id, name, job_role: jobRole, url } = item;
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
 
   return (
     <Column key={id} {...props}>
@@ -34,10 +36,20 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
       </Column>
 
       <Row mt='10px'>
-        <Icon ml='5px' icon='trash' color='black' width={14} height={18}></Icon>
+        <TouchableOpacity onPress={() => setIsOpenDeleteModal(true)}>
+          <Icon ml='5px' icon='trash' color='black' width={14} height={18} />
+        </TouchableOpacity>
 
-        <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41}></Icon>
+        <TouchableOpacity>
+          <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41} />
+        </TouchableOpacity>
       </Row>
+
+      <NaverDeleteModal
+        idUser={id}
+        isVisible={isOpenDeleteModal}
+        setIsVisible={setIsOpenDeleteModal}
+      />
     </Column>
   );
 };
