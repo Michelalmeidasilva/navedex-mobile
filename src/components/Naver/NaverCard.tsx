@@ -1,9 +1,12 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { Row, Column, Text, Icon, RowProps, NaverDeleteModal } from 'src/components';
+
 import { TouchableOpacity } from 'react-native';
+import { validateImage } from 'src/utils';
+
 export interface NaverData {
-  id: any;
+  id: string;
   name: string;
   admissionDate: string;
   job_role: string;
@@ -23,7 +26,11 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
 
   return (
     <Column key={id} {...props}>
-      <Image source={{ uri: url }} />
+      <Image
+        source={{
+          uri: validateImage(url)
+        }}
+      />
 
       <Column>
         <Text variant='small' lineHeight='20px' mt='8px' fontWeight={700}>
