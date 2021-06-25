@@ -2,8 +2,10 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { Row, Column, Text, Icon, RowProps, NaverDeleteModal } from 'src/components';
 
-import { TouchableOpacity } from 'react-native';
 import { validateImage } from 'src/utils';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
 
 export interface NaverData {
   id: string;
@@ -64,5 +66,9 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
 const Image = styled.Image`
   height: 180px;
 `;
+
+type CardTouchableProps = TouchableOpacityProps & RowProps;
+
+const CardTouchable: FC<CardTouchableProps> = styled.TouchableOpacity``;
 
 export default NaverCardComponent;
