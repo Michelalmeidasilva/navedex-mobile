@@ -2,7 +2,14 @@ import React, { FC } from 'react';
 
 import { ColumnProps, Column } from 'src/components';
 
-import { SVGTrash, SVGEdit, SVGClear, SVGHamburguer, SVGError } from 'src/assets/icons';
+import {
+  SVGTrash,
+  SVGEdit,
+  SVGClear,
+  SVGHamburguer,
+  SVGError,
+  SVGArrowBack
+} from 'src/assets/icons';
 export interface SVGProps {
   width?: number;
   height?: number;
@@ -28,6 +35,7 @@ const ERROR = 'error';
 const EDIT = 'edit';
 const TRASH = 'trash';
 const CLEAR = 'clear';
+const ARROW_BACK = 'arrow-back';
 
 const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...props }): any => {
   const renderIcon = (params: RenderIconProps): JSX.Element | undefined => {
@@ -48,6 +56,9 @@ const IconComponent: FC<IconComponentProps> = ({ icon, width, height, color, ...
 
       case CLEAR:
         return <SVGClear {...rest} />;
+
+      case ARROW_BACK:
+        return <SVGArrowBack {...rest} />;
 
       default:
         throw new InvalidNameIconError();
