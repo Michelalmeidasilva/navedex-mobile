@@ -29,39 +29,41 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
 
   return (
     <Column key={id} {...props}>
-      <Image
-        source={{
-          uri: validateImage(url)
-        }}
-      />
+      <TouchableOpacity onPress={() => navigation.push('NaverDetails', { id: id })}>
+        <Image
+          source={{
+            uri: validateImage(url)
+          }}
+        />
 
-      <Column>
-        <Text variant='small' lineHeight='20px' mt='8px' fontWeight={700}>
-          {name}
-        </Text>
+        <Column>
+          <Text variant='small' lineHeight='20px' mt='8px' fontWeight={700}>
+            {name}
+          </Text>
 
-        <Text variant='small' mt='4px'>
-          {jobRole.length > 23 ? jobRole.substr(0, 23).concat('...') : jobRole}
-        </Text>
-      </Column>
+          <Text variant='small' mt='4px'>
+            {jobRole.length > 23 ? jobRole.substr(0, 23).concat('...') : jobRole}
+          </Text>
+        </Column>
 
-      <Row mt='10px'>
-        <TouchableOpacity onPress={() => setIsOpenDeleteModal(true)}>
-          <Icon ml='5px' icon='trash' color='black' width={14} height={18} />
-        </TouchableOpacity>
+        <Row mt='10px'>
+          <TouchableOpacity onPress={() => setIsOpenDeleteModal(true)}>
+            <Icon ml='5px' icon='trash' color='black' width={14} height={18} />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.push('NaverEdit', { editForm: true, paramsId: id })}
-        >
-          <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41}></Icon>
-        </TouchableOpacity>
-      </Row>
+          <TouchableOpacity
+            onPress={() => navigation.push('NaverEdit', { editForm: true, paramsId: id })}
+          >
+            <Icon ml='24px' icon='edit' color='black' width={18.41} height={18.41}></Icon>
+          </TouchableOpacity>
+        </Row>
 
-      <NaverDeleteModal
-        idUser={id}
-        isVisible={isOpenDeleteModal}
-        setIsVisible={setIsOpenDeleteModal}
-      />
+        <NaverDeleteModal
+          idUser={id}
+          isVisible={isOpenDeleteModal}
+          setIsVisible={setIsOpenDeleteModal}
+        />
+      </TouchableOpacity>
     </Column>
   );
 };

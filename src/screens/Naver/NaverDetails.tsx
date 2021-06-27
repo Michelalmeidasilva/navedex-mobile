@@ -1,16 +1,20 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
-import { Row, Column, Text, Modal, Button, NaverCard, NaverData } from 'src/components';
+import { Row, Column, Text, Modal, Button, NaverDeleteModal, NaverData } from 'src/components';
 import { getNaverById } from 'src/services';
 import { validateImage } from 'src/utils';
 
 const NaverDetails: FC = ({ route }) => {
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+
   const [data, setData] = useState<NaverData>();
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +25,6 @@ const NaverDetails: FC = ({ route }) => {
         const naver = await getNaverById(id);
         setData({
           ...naver
-          //,  age: 21
         });
       } catch (err) {
         setIsErrorFetching(true);
@@ -88,16 +91,24 @@ const NaverDetails: FC = ({ route }) => {
                 nameIcon='trash'
                 widthIcon={14}
                 width='47.6%'
+                onPress={() => setIsOpenDeleteModal(true)}
                 heightIcon={18}
               />
               <Button
-                accessibilityLabel='Botão de excluir um usuário'
+                accessibilityLabel='Botão de editar um usuário'
                 title='Editar'
                 variant='primary'
                 nameIcon='edit'
                 width='47.6%'
+                onPress={() => navigation.push('NaverEdit', { paramsId: data?.id })}
                 widthIcon={14}
                 heightIcon={18}
+              />
+
+              <NaverDeleteModal
+                idUser={data?.id}
+                isVisible={isOpenDeleteModal}
+                setIsVisible={setIsOpenDeleteModal}
               />
             </Row>
           </Column>
