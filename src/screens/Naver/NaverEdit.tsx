@@ -19,7 +19,6 @@ interface FormNaverEdit {
 }
 
 const NaverEdit: FC = ({ route }) => {
-  const [naver, setNaver] = useState<NaverData>();
   const [isUpdatingNaver, setIsUpdatingNaver] = useState<boolean>(false);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
@@ -31,7 +30,8 @@ const NaverEdit: FC = ({ route }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<FormNaverEdit>({
     reValidateMode: 'onSubmit',
     resolver: yupResolver(NaverEditSchema),
@@ -50,7 +50,7 @@ const NaverEdit: FC = ({ route }) => {
       try {
         setIsFetchingData(true);
         const naverResponse = await getNaverById(paramsId);
-        setNaver(naverResponse);
+        reset(naverResponse);
       } catch (err) {
         setMessageModal('Erro ao carregar o naver');
         setIsErrorFetching(true);
