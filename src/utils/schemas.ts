@@ -17,7 +17,7 @@ export const NaverAddSchema = Yup.object().shape({
   admission_date: Yup.string().required(),
   url: Yup.string().required(),
   project: Yup.string().required(),
-  birthdate: Yup.string().required()
+  birthdate: Yup.date().required()
 });
 
 export const NaverEditSchema = Yup.object().shape({
@@ -26,5 +26,5 @@ export const NaverEditSchema = Yup.object().shape({
   admission_date: Yup.string().required(),
   url: Yup.string().required(),
   project: Yup.string().required(),
-  birthdate: Yup.string().required()
+  birthdate: Yup.date().required()
 });

@@ -12,7 +12,7 @@ import { getNaverById, updateNaverById } from 'src/services';
 interface FormNaverEdit {
   name: string;
   job_role: string;
-  birthdate: string;
+  birthdate: Date;
   admission_date: string;
   project: string;
   url: string;
@@ -119,20 +119,21 @@ const NaverEdit: FC = ({ route }) => {
               )}
             />
 
-            <Controller
+            {/* <Controller
               name='birthdate'
               control={control}
               render={({ field: { onChange, value } }): JSX.Element => (
-                <Input
-                  mt='24px'
-                  label='Idade'
-                  placeholder='Idade'
-                  value={value}
-                  error={errors.birthdate?.message}
-                  onChangeText={onChange}
-                />
+                // <Input
+                //   mt='24px'
+                //   label='Idade'
+                //   placeholder='Idade'
+                //   value={value}
+                //   error={errors.birthdate?.message}
+                //   onChangeText={onChange}
+                // />
+
               )}
-            />
+            /> */}
 
             <Controller
               name='admission_date'

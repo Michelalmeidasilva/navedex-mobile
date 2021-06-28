@@ -12,6 +12,8 @@ target 'navedexmobile' do
     :hermes_enabled => false
   )
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'navedexmobileTests' do
     inherit! :complete
     # Pods for testing

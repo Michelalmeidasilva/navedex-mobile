@@ -36,7 +36,7 @@ const DrawerHeader: FC = () => {
 const Container = styled.View`
   background-color: ${props => props.backgroundColor};
   elevation: 7;
-  height: 64;
+  height: 64px;
   flex-direction: row;
 `;
 export default DrawerHeader;

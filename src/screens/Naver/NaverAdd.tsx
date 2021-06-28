@@ -1,18 +1,18 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { ScrollView } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Column, Text, Modal, Input, Button } from 'src/components';
+import { Column, Text, Modal, Input, Button, DatePicker } from 'src/components';
 import { createNaver } from 'src/services';
 import { NaverAddSchema } from 'src/utils';
 
 interface FormNaverAdd {
   name: string;
   job_role: string;
-  birthdate: string;
+  birthdate: Date;
   admission_date: string;
   project: string;
   url: string;
@@ -23,6 +23,7 @@ const NaverAdd: FC = () => {
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
   const [titleModal, setTitleModal] = useState<string>('');
+
   const {
     control,
     handleSubmit,
@@ -33,7 +34,6 @@ const NaverAdd: FC = () => {
     defaultValues: {
       name: '',
       job_role: '',
-      birthdate: '',
       project: '',
       url: ''
     }
@@ -99,13 +99,14 @@ const NaverAdd: FC = () => {
             name='birthdate'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
-              <Input
+              <DatePicker
                 mt='24px'
                 label='Idade'
                 placeholder='Idade'
+                name='birthdate'
                 value={value}
+                onChange={onChange}
                 error={errors.birthdate?.message}
-                onChangeText={onChange}
               />
             )}
           />
