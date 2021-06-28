@@ -30,18 +30,19 @@ const NaverDetails: FC = ({ route }) => {
     }
 
     if (year_age > 0) {
-      date = year_age >= 1 ? '' + year_age + ' ano - ' : '' + year_age + ' anos - ';
+      date = year_age === 1 ? `${year_age} ano - ` : ` ${year_age} anos - `;
     }
 
     if (month_age > 0) {
-      date = date + (month_age === 1 ? month_age + ' mes - ' : month_age + ' mesês - ');
+      date += month_age === 1 ? `${month_age} mes - ` : `${month_age} meses - `;
     }
 
     if (day_age > 0) {
-      date = date + (day_age === 1 ? (day_age % 30) + ' dia ' : (day_age % 30) + ' dias ');
+      const days = day_age % 30;
+      date += day_age === 1 ? `${days} dia ` : `${days} dias `;
     }
 
-    return date || '---';
+    return date || '- - -';
   };
 
   useEffect(() => {
