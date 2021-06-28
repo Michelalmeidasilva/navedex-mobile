@@ -85,7 +85,7 @@ const NaverDetails: FC = ({ route }) => {
             }}
           />
           <Column mx='16px' my='24px'>
-            <Text fontSize='22px' lineHeight='32' fontWeight={700} mt='4px'>
+            <Text fontSize='22px' lineHeight='32px' fontWeight={700} mt='4px'>
               {data?.name}
             </Text>
 
