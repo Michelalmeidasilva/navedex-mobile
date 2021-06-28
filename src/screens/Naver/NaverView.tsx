@@ -1,35 +1,16 @@
 import React, { FC, useState, useEffect } from 'react';
 import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import { useNaver } from 'src/context';
 import { Row, Column, Text, Modal, Button, NaverCard, NaverData } from 'src/components';
-import { getNavers } from 'src/services';
 
 const NaverView: FC = () => {
-  const [data, setData] = useState<NaverData[]>([]);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
   const [messageErrorModal, setMessageErrorModal] = useState<string>('');
   const [titleModalError, setTitleModalError] = useState<string>('');
   const navigation = useNavigation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsFetchingData(true);
-
-        const navers = await getNavers();
-        setData(navers);
-      } catch (err) {
-        setTitleModalError('Erro');
-        setMessageErrorModal('Erro ao carregar os navers');
-        setIsErrorFetching(true);
-      } finally {
-        setIsFetchingData(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const { navers } = useNaver();
 
   return (
     <ScrollView>
@@ -62,7 +43,7 @@ const NaverView: FC = () => {
             <FlatList
               showsVerticalScrollIndicator={false}
               initialNumToRender={4}
-              data={data}
+              data={navers}
               numColumns={2}
               keyExtractor={item => item.id}
               renderItem={({ item }) => <NaverCard px='8px' mt='26px' width='50%' item={item} />}

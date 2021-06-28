@@ -141,6 +141,7 @@ const NaverDetails: FC = ({ route }) => {
 
               <NaverDeleteModal
                 idUser={data?.id}
+                redirectAfterDelete={'Naver'}
                 isVisible={isOpenDeleteModal}
                 setIsVisible={setIsOpenDeleteModal}
               />
