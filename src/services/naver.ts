@@ -10,3 +10,6 @@ export const getNaverById = (id: string): Promise<AxiosResponse<any>> =>
 
 export const updateNaverById = (id: string, data: any): Promise<AxiosResponse<any>> =>
   fetchClient.put(`/navers/${id}`, data);
+
+export const deleteNaver = (id: string): Promise<AxiosResponse<any>> =>
+  fetchClient.delete(`/navers/${id}`);
