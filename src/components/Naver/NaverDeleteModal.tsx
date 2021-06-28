@@ -67,7 +67,7 @@ const NaverDeleteModal: FC = ({ idUser, isVisible, setIsVisible }) => {
         handleClose={() => setIsModalMessageOpen(false)}
         height={108}
       >
-        <Column px='24'>
+        <Column px='24px'>
           <Text>{modalMessage}</Text>
         </Column>
       </Modal>

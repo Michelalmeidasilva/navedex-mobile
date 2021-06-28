@@ -1,25 +1,25 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { format } from 'date-fns';
 
 import { NaverEditSchema } from 'src/utils';
-import { Row, Column, Text, Modal, Button, NaverData, Input } from 'src/components';
+import { Column, Text, Modal, Button, DatePicker, Input } from 'src/components';
 import { getNaverById, updateNaverById } from 'src/services';
 
 interface FormNaverEdit {
   name: string;
   job_role: string;
-  birthdate: string;
+  birthdate: Date;
   admission_date: string;
   project: string;
   url: string;
 }
 
 const NaverEdit: FC = ({ route }) => {
-  const [naver, setNaver] = useState<NaverData>();
   const [isUpdatingNaver, setIsUpdatingNaver] = useState<boolean>(false);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
@@ -31,14 +31,16 @@ const NaverEdit: FC = ({ route }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setValue,
+    reset
   } = useForm<FormNaverEdit>({
     reValidateMode: 'onSubmit',
+
     resolver: yupResolver(NaverEditSchema),
     defaultValues: {
       name: '',
       job_role: '',
-      birthdate: '',
       project: '',
       url: ''
     }
@@ -49,8 +51,14 @@ const NaverEdit: FC = ({ route }) => {
       const { paramsId } = route.params;
       try {
         setIsFetchingData(true);
+
         const naverResponse = await getNaverById(paramsId);
-        setNaver(naverResponse);
+
+        reset({
+          ...naverResponse,
+          admission_date: new Date(naverResponse.admission_date),
+          birthdate: new Date(naverResponse.birthdate)
+        });
       } catch (err) {
         setMessageModal('Erro ao carregar o naver');
         setIsErrorFetching(true);
@@ -123,13 +131,17 @@ const NaverEdit: FC = ({ route }) => {
               name='birthdate'
               control={control}
               render={({ field: { onChange, value } }): JSX.Element => (
-                <Input
+                <DatePicker
                   mt='24px'
                   label='Idade'
                   placeholder='Idade'
+                  name='birthdate'
+                  setValue={setValue}
                   value={value}
+                  maxDate={new Date(2007, 6, 28)}
+                  defaultValue={new Date(2000, 5, 20)}
+                  onChange={onChange}
                   error={errors.birthdate?.message}
-                  onChangeText={onChange}
                 />
               )}
             />
@@ -138,13 +150,17 @@ const NaverEdit: FC = ({ route }) => {
               name='admission_date'
               control={control}
               render={({ field: { onChange, value } }): JSX.Element => (
-                <Input
+                <DatePicker
                   mt='24px'
                   label='Tempo de Empresa'
                   placeholder='Tempo de Empresa'
+                  name='admission_date'
+                  setValue={setValue}
                   value={value}
-                  error={errors.admission_date?.message}
-                  onChangeText={onChange}
+                  maxDate={new Date()}
+                  defaultValue={new Date(2020, 6, 24)}
+                  onChange={onChange}
+                  error={errors.birthdate?.message}
                 />
               )}
             />

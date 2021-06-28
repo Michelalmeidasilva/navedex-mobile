@@ -14,9 +14,11 @@ export interface InputComponentProps extends ColumnProps {
   label?: string;
   error?: string;
   name?: string;
-  value?: string;
+  value?: any;
+  year?: boolean;
+  editable?: boolean;
   placeholder?: string;
-  onChangeText?(text: string): void;
+  onChangeText?(text: any): void;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
 }
@@ -30,12 +32,15 @@ const InputComponent: ForwardRefRenderFunction<InputRef, InputComponentProps> = 
   {
     label,
     error,
+    editable,
     name,
     value,
     placeholder,
     onChangeText,
     secureTextEntry = false,
     keyboardType,
+    children,
+    year,
     ...props
   },
   ref
@@ -58,6 +63,7 @@ const InputComponent: ForwardRefRenderFunction<InputRef, InputComponentProps> = 
         <StyledInput
           name={name}
           value={value}
+          editable={editable}
           error={error}
           placeholder={placeholder}
           keyboardType={keyboardType}

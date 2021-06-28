@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,19 +16,53 @@ const NaverDetails: FC = ({ route }) => {
   const [messageModal, setMessageModal] = useState<string>('');
   const navigation = useNavigation();
 
+  const getJobTime = admission_year => {
+    const diffInMillisecond = new Date().valueOf() - admission_year.valueOf();
+
+    const year_age = Math.floor(diffInMillisecond / 31536000000);
+    const day_age = Math.floor((diffInMillisecond % 31536000000) / 86400000);
+    const month_age = Math.floor(day_age / 30);
+
+    let date = '';
+
+    if (day_age === 0) {
+      return 'Contratado hoje';
+    }
+
+    if (year_age > 0) {
+      date = year_age === 1 ? `${year_age} ano - ` : ` ${year_age} anos - `;
+    }
+
+    if (month_age > 0) {
+      date += month_age === 1 ? `${month_age} mes - ` : `${month_age} meses - `;
+    }
+
+    if (day_age > 0) {
+      const days = day_age % 30;
+      date += day_age === 1 ? `${days} dia ` : `${days} dias `;
+    }
+
+    return date || '- - -';
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const { id } = route.params;
 
       try {
+        const currentYear = new Date().getFullYear();
         setIsFetchingData(true);
+
         const naver = await getNaverById(id);
+
         setData({
-          ...naver
+          ...naver,
+          age: currentYear - new Date(naver.birthdate).getFullYear(),
+          admission_date: new Date(naver.admission_date)
         });
       } catch (err) {
         setIsErrorFetching(true);
-        setMessageModal(err?.message || 'Erro enquanto carregava o naver');
+        setMessageModal('Erro enquanto carregava o naver');
       } finally {
         setIsFetchingData(false);
       }
@@ -51,7 +85,7 @@ const NaverDetails: FC = ({ route }) => {
             }}
           />
           <Column mx='16px' my='24px'>
-            <Text fontSize='22px' lineHeight='32' fontWeight={600} mt='4px'>
+            <Text fontSize='22px' lineHeight='32' fontWeight={700} mt='4px'>
               {data?.name}
             </Text>
 
@@ -59,23 +93,23 @@ const NaverDetails: FC = ({ route }) => {
               {data?.job_role}
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Idade
             </Text>
 
             <Text mt='4px' variant='regular' fontWeight={400}>
-              {data?.age}
+              {data?.age} anos
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Tempo de Empresa
             </Text>
 
             <Text mt='4px' variant='regular' fontWeight={400}>
-              {data?.admission_date}
+              {data && getJobTime(data?.admission_date)}
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Projetos que participou
             </Text>
 

@@ -4,16 +4,17 @@ import { ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { format } from 'date-fns';
 
-import { Column, Text, Modal, Input, Button } from 'src/components';
+import { Column, Text, Modal, Input, Button, DatePicker } from 'src/components';
 import { createNaver } from 'src/services';
 import { NaverAddSchema } from 'src/utils';
 
 interface FormNaverAdd {
   name: string;
   job_role: string;
-  birthdate: string;
-  admission_date: string;
+  birthdate: Date;
+  admission_date: Date;
   project: string;
   url: string;
 }
@@ -23,9 +24,11 @@ const NaverAdd: FC = () => {
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
   const [titleModal, setTitleModal] = useState<string>('');
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<FormNaverAdd>({
     reValidateMode: 'onSubmit',
@@ -33,7 +36,6 @@ const NaverAdd: FC = () => {
     defaultValues: {
       name: '',
       job_role: '',
-      birthdate: '',
       project: '',
       url: ''
     }
@@ -43,12 +45,17 @@ const NaverAdd: FC = () => {
     try {
       setIsAddingNaver(true);
 
-      await createNaver(naver);
+      await createNaver({
+        ...naver,
+        admission_date: format(naver.admission_date, 'dd/MM/yyyy'),
+        birthdate: format(naver.birthdate, 'dd/MM/yyyy')
+      });
 
       setTitleModal('Naver Adicionado');
       setMessageModal('Naver Adicionado com sucesso!');
       setIsVisibleModal(true);
     } catch (err) {
+      console.log(err);
       setTitleModal('Erro');
       setMessageModal('Erro ao adicionar o naver');
       setIsVisibleModal(true);
@@ -99,13 +106,17 @@ const NaverAdd: FC = () => {
             name='birthdate'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
-              <Input
+              <DatePicker
                 mt='24px'
                 label='Idade'
                 placeholder='Idade'
+                name='birthdate'
+                setValue={setValue}
                 value={value}
+                maxDate={new Date(2007, 6, 28)}
+                defaultValue={new Date(2000, 5, 20)}
+                onChange={onChange}
                 error={errors.birthdate?.message}
-                onChangeText={onChange}
               />
             )}
           />
@@ -114,13 +125,17 @@ const NaverAdd: FC = () => {
             name='admission_date'
             control={control}
             render={({ field: { onChange, value } }): JSX.Element => (
-              <Input
+              <DatePicker
                 mt='24px'
                 label='Tempo de Empresa'
                 placeholder='Tempo de Empresa'
+                name='admission_date'
+                setValue={setValue}
                 value={value}
-                error={errors.admission_date?.message}
-                onChangeText={onChange}
+                maxDate={new Date()}
+                defaultValue={new Date(2020, 6, 24)}
+                onChange={onChange}
+                error={errors.birthdate?.message}
               />
             )}
           />
