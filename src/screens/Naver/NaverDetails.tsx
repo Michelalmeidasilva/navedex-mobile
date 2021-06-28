@@ -16,27 +16,48 @@ const NaverDetails: FC = ({ route }) => {
   const [messageModal, setMessageModal] = useState<string>('');
   const navigation = useNavigation();
 
+  const getJobTime = admission_year => {
+    const diffInMillisecond = new Date().valueOf() - admission_year.valueOf();
+
+    const year_age = Math.floor(diffInMillisecond / 31536000000);
+    const day_age = Math.floor((diffInMillisecond % 31536000000) / 86400000);
+    const month_age = Math.floor(day_age / 30);
+
+    let date = '';
+
+    if (day_age === 0) {
+      return 'Contratado hoje';
+    }
+
+    if (year_age > 0) {
+      date = year_age >= 1 ? '' + year_age + ' ano - ' : '' + year_age + ' anos - ';
+    }
+
+    if (month_age > 0) {
+      date = date + (month_age === 1 ? month_age + ' mes - ' : month_age + ' mesês - ');
+    }
+
+    if (day_age > 0) {
+      date = date + (day_age === 1 ? (day_age % 30) + ' dia ' : (day_age % 30) + ' dias ');
+    }
+
+    return date || '---';
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const { id } = route.params;
 
       try {
         const currentYear = new Date().getFullYear();
-        const currentMonth = new Date().getMonth();
-
         setIsFetchingData(true);
 
         const naver = await getNaverById(id);
-        const monthAdmissionNaver = new Date(naver.admission_date).getMonth();
 
         setData({
           ...naver,
           age: currentYear - new Date(naver.birthdate).getFullYear(),
-          admission_year: currentYear - new Date(naver.admission_date).getFullYear(),
-          admission_month:
-            currentMonth > monthAdmissionNaver
-              ? currentMonth - monthAdmissionNaver
-              : monthAdmissionNaver - currentMonth
+          admission_date: new Date(naver.admission_date)
         });
       } catch (err) {
         setIsErrorFetching(true);
@@ -63,7 +84,7 @@ const NaverDetails: FC = ({ route }) => {
             }}
           />
           <Column mx='16px' my='24px'>
-            <Text fontSize='22px' lineHeight='32' fontWeight={600} mt='4px'>
+            <Text fontSize='22px' lineHeight='32' fontWeight={700} mt='4px'>
               {data?.name}
             </Text>
 
@@ -71,7 +92,7 @@ const NaverDetails: FC = ({ route }) => {
               {data?.job_role}
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Idade
             </Text>
 
@@ -79,16 +100,15 @@ const NaverDetails: FC = ({ route }) => {
               {data?.age} anos
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Tempo de Empresa
             </Text>
 
             <Text mt='4px' variant='regular' fontWeight={400}>
-              {(data?.admission_year > 0 && data?.admission_year + ' anos') || ' - '}
-              {(data?.admission_month > 0 && ' e ' + data?.admission_month + ' meses') || ' - '}
+              {data && getJobTime(data?.admission_date)}
             </Text>
 
-            <Text mt='24px' variant='regular' fontWeight={600}>
+            <Text mt='24px' variant='regular' fontWeight={700}>
               Projetos que participou
             </Text>
 
