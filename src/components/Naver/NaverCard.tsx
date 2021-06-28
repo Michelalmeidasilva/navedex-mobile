@@ -10,11 +10,11 @@ import { useNavigation } from '@react-navigation/native';
 export interface NaverData {
   id: string;
   name: string;
-  admissionDate: string;
+  admission_date: Date;
   job_role: string;
   user_id: string;
   project: string;
-  birthdate: string;
+  birthdate: Date;
   url: string;
 }
 

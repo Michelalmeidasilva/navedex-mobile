@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,14 +21,26 @@ const NaverDetails: FC = ({ route }) => {
       const { id } = route.params;
 
       try {
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+
         setIsFetchingData(true);
+
         const naver = await getNaverById(id);
+        const monthAdmissionNaver = new Date(naver.admission_date).getMonth();
+
         setData({
-          ...naver
+          ...naver,
+          age: currentYear - new Date(naver.birthdate).getFullYear(),
+          admission_year: currentYear - new Date(naver.admission_date).getFullYear(),
+          admission_month:
+            currentMonth > monthAdmissionNaver
+              ? currentMonth - monthAdmissionNaver
+              : monthAdmissionNaver - currentMonth
         });
       } catch (err) {
         setIsErrorFetching(true);
-        setMessageModal(err?.message || 'Erro enquanto carregava o naver');
+        setMessageModal('Erro enquanto carregava o naver');
       } finally {
         setIsFetchingData(false);
       }
@@ -64,7 +76,7 @@ const NaverDetails: FC = ({ route }) => {
             </Text>
 
             <Text mt='4px' variant='regular' fontWeight={400}>
-              {data?.age}
+              {data?.age} anos
             </Text>
 
             <Text mt='24px' variant='regular' fontWeight={600}>
@@ -72,7 +84,8 @@ const NaverDetails: FC = ({ route }) => {
             </Text>
 
             <Text mt='4px' variant='regular' fontWeight={400}>
-              {data?.admission_date}
+              {(data?.admission_year > 0 && data?.admission_year + ' anos') || ' - '}
+              {(data?.admission_month > 0 && ' e ' + data?.admission_month + ' meses') || ' - '}
             </Text>
 
             <Text mt='24px' variant='regular' fontWeight={600}>

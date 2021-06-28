@@ -14,17 +14,17 @@ export const LoginSchema = Yup.object().shape({
 export const NaverAddSchema = Yup.object().shape({
   name: Yup.string().required(),
   job_role: Yup.string().required(),
-  admission_date: Yup.string().required(),
   url: Yup.string().required(),
   project: Yup.string().required(),
-  birthdate: Yup.date().required()
+  birthdate: Yup.date().required(),
+  admission_date: Yup.date().required()
 });
 
 export const NaverEditSchema = Yup.object().shape({
   name: Yup.string().required(),
   job_role: Yup.string().required(),
-  admission_date: Yup.string().required(),
   url: Yup.string().required(),
   project: Yup.string().required(),
-  birthdate: Yup.date().required()
+  birthdate: Yup.date().required(),
+  admission_date: Yup.date().required()
 });
