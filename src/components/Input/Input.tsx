@@ -49,7 +49,7 @@ const InputComponent: ForwardRefRenderFunction<InputRef, InputComponentProps> = 
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const getColorBorder = useMemo(() => (error ? colors.error : isFocused ? 'blue' : 'black'));
+  const getColorBorder = useMemo(() => (error ? colors.error : isFocused ? 'blue' : 'black'), []);
 
   return (
     <Column {...props}>
