@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components/native';
 
 import { UnauthenticatedApp, AuthenticatedApp } from 'src/navigators';
 import { theme } from 'src/theme';
-import { useUser, AppProvider } from 'src/context';
+import { useUser, AppProvider, NaverProvider } from 'src/context';
 import { Column } from 'src/components';
 
 if (__DEV__) {
@@ -28,7 +28,13 @@ const App: FC = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        {user ? (
+          <NaverProvider>
+            <AuthenticatedApp />
+          </NaverProvider>
+        ) : (
+          <UnauthenticatedApp />
+        )}
       </NavigationContainer>
     </SafeAreaProvider>
   );

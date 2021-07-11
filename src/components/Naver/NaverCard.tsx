@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { Row, Column, Text, Icon, RowProps, NaverDeleteModal } from 'src/components';
 
 import { validateImage } from 'src/utils';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,7 +23,7 @@ interface NaverCardProps extends RowProps {
 }
 
 const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
-  const { id, name, job_role: jobRole, url } = item;
+  const { id, name, job_role, url } = item;
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
   const navigation = useNavigation();
 
@@ -42,7 +42,7 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
           </Text>
 
           <Text variant='small' mt='4px'>
-            {jobRole.length > 23 ? jobRole.substr(0, 23).concat('...') : jobRole}
+            {job_role.length > 23 ? job_role.substr(0, 23).concat('...') : job_role}
           </Text>
         </Column>
 
@@ -71,9 +71,5 @@ const NaverCardComponent: FC<NaverCardProps> = ({ item, ...props }) => {
 const Image = styled.Image`
   height: 180px;
 `;
-
-type CardTouchableProps = TouchableOpacityProps & RowProps;
-
-const CardTouchable: FC<CardTouchableProps> = styled.TouchableOpacity``;
 
 export default NaverCardComponent;

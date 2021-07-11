@@ -4,11 +4,11 @@ import { ActivityIndicator, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format } from 'date-fns';
+import { useNaver } from 'src/context';
 
 import { NaverEditSchema } from 'src/utils';
 import { Column, Text, Modal, Button, DatePicker, Input } from 'src/components';
-import { getNaverById, updateNaverById } from 'src/services';
+import { getNaverById } from 'src/services';
 
 interface FormNaverEdit {
   name: string;
@@ -23,6 +23,7 @@ const NaverEdit: FC = ({ route }) => {
   const [isUpdatingNaver, setIsUpdatingNaver] = useState<boolean>(false);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
   const [isErrorFetching, setIsErrorFetching] = useState<boolean>(false);
+  const { editNaver } = useNaver();
 
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
@@ -53,7 +54,6 @@ const NaverEdit: FC = ({ route }) => {
         setIsFetchingData(true);
 
         const naverResponse = await getNaverById(paramsId);
-
         reset({
           ...naverResponse,
           admission_date: new Date(naverResponse.admission_date),
@@ -72,8 +72,7 @@ const NaverEdit: FC = ({ route }) => {
   const handleUpdateNaver = async (naver: FormNaverEdit): Promise<void> => {
     try {
       setIsUpdatingNaver(true);
-
-      await updateNaverById(naver.id, naver);
+      await editNaver(naver);
 
       setTitleModal('Naver Editado');
       setMessageModal('Naver editado com sucesso');

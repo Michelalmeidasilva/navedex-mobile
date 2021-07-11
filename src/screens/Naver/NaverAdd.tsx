@@ -4,11 +4,12 @@ import { ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format } from 'date-fns';
 
 import { Column, Text, Modal, Input, Button, DatePicker } from 'src/components';
 import { createNaver } from 'src/services';
 import { NaverAddSchema } from 'src/utils';
+import { useNaver } from 'src/context';
+import { useCallback } from 'react';
 
 interface FormNaverAdd {
   name: string;
@@ -24,7 +25,7 @@ const NaverAdd: FC = () => {
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
   const [titleModal, setTitleModal] = useState<string>('');
-
+  const { addNaver } = useNaver();
   const {
     control,
     handleSubmit,
@@ -41,15 +42,11 @@ const NaverAdd: FC = () => {
     }
   });
 
-  const handleAddNaver = async (naver: FormNaverAdd): Promise<void> => {
+  const handleAddNaver = useCallback(async (naver: FormNaverAdd): Promise<void> => {
     try {
       setIsAddingNaver(true);
 
-      await createNaver({
-        ...naver,
-        admission_date: format(naver.admission_date, 'dd/MM/yyyy'),
-        birthdate: format(naver.birthdate, 'dd/MM/yyyy')
-      });
+      await addNaver(naver);
 
       setTitleModal('Naver Adicionado');
       setMessageModal('Naver Adicionado com sucesso!');
@@ -62,7 +59,7 @@ const NaverAdd: FC = () => {
     } finally {
       setIsAddingNaver(false);
     }
-  };
+  }, []);
 
   return (
     <KeyboardAwareScrollView>

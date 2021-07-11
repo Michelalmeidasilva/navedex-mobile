@@ -1,32 +1,31 @@
 import React, { FC, useState } from 'react';
 import { Row, Column, Text, Button, Modal } from 'src/components';
-import { deleteUser } from 'src/services';
+import { useNaver } from 'src/context';
+import { useNavigation } from '@react-navigation/native';
 
-const NaverDeleteModal: FC = ({ idUser, isVisible, setIsVisible }) => {
+const NaverDeleteModal: FC = ({ idUser, isVisible, setIsVisible, redirectAfterDelete }) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
   const [titleModalMessage, setTitleModalMessage] = useState<string>('');
   const [isModalMessageOpen, setIsModalMessageOpen] = useState<boolean>(false);
-
+  const { destroyNaver } = useNaver();
+  const navigation = useNavigation();
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
 
-      await deleteUser(idUser);
-
-      setIsVisible(false);
+      await destroyNaver(idUser);
 
       setTitleModalMessage('Naver Excluido');
       setModalMessage('Naver excluido com sucesso!');
       setIsModalMessageOpen(true);
     } catch (err) {
-      setIsVisible(false);
-
-      setModalMessage('Erro ao excluir o naver');
       setTitleModalMessage('Erro');
+      setModalMessage('Erro ao excluir o naver');
       setIsModalMessageOpen(true);
     } finally {
       setIsDeleting(false);
+      setIsVisible(false);
     }
   };
 
@@ -64,7 +63,12 @@ const NaverDeleteModal: FC = ({ idUser, isVisible, setIsVisible }) => {
       <Modal
         title={titleModalMessage}
         isVisible={isModalMessageOpen}
-        handleClose={() => setIsModalMessageOpen(false)}
+        handleClose={() => {
+          if (redirectAfterDelete) {
+            navigation.navigate(redirectAfterDelete);
+          }
+          setIsModalMessageOpen(false);
+        }}
         height={108}
       >
         <Column px='24px'>
