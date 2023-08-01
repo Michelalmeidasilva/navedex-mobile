@@ -3,7 +3,7 @@
 ## Description
 
 Navedex Challenge:
-Create an application for viewing and creating "navers," containing information such as name, age, position, employment duration, and projects participated in.
+Create an application for viewing and creating "navers" containing information such as name, age, position, employment duration, and projects participated in.
 The screens used as a guide are available in [Figma](https://www.figma.com/file/MIh7DeADz8M3mmcQwpcFdD/Teste-Mobile?node-id=1253%3A0).
 The application integrates with the Navedex API developed by nave.rs, available at the URI: https://navedex-api.herokuapp.com/v1/. The API documentation is available in [collection](https://www.getpostman.com/collections/e6afe4028c2a1e56e577), and you need to use Postman to import it.
 
