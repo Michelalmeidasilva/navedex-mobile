@@ -1,29 +1,29 @@
 # NAVEDEX
 
-## Descrição
+## Description
 
-Desafio Navedex:
-Criar um aplicativo para visualização e criação dos navers, possuindo informações como: nome, idade, cargo, tempo de empresa e projetos que participou.
-As telas utilizadas como guia foram as que estão disponiveis no [figma](https://www.figma.com/file/MIh7DeADz8M3mmcQwpcFdD/Teste-Mobile?node-id=1253%3A0)
-Foi feito a integração com a api da navedex desenvolvida pela nave.rs disponivel na uri: https://navedex-api.herokuapp.com/v1/. A documentação da API está disponivel em [collection](https://www.getpostman.com/collections/e6afe4028c2a1e56e577), é preciso utilizar o postman para importa-la.
+Navedex Challenge:
+Create an application for viewing and creating "navers," containing information such as name, age, position, employment duration, and projects participated in.
+The screens used as a guide are available in [Figma](https://www.figma.com/file/MIh7DeADz8M3mmcQwpcFdD/Teste-Mobile?node-id=1253%3A0).
+The application integrates with the Navedex API developed by nave.rs, available at the URI: https://navedex-api.herokuapp.com/v1/. The API documentation is available in [collection](https://www.getpostman.com/collections/e6afe4028c2a1e56e577), and you need to use Postman to import it.
 
-Para mais informações sobre os requisitos do projeto, acesse [repositório oficial do desáfio](https://github.com/naveteam/react-native-challenge)
+For more information about the project requirements, access the [official challenge repository](https://github.com/naveteam/react-native-challenge).
 
-## Como rodar o projeto
+## How to run the project
 
-### Requisitos
+### Requirements
 
-- Clonar o repositório.
-- Instalar [node.js](https://nodejs.org/en/).
-- Já ter feito o [setup de environment](https://reactnative.dev/docs/environment-setup).
-- Rodar o comando `yarn install` ou `npx install` para instalar as dependências do projeto.
+- Clone the repository.
+- Install [node.js](https://nodejs.org/en/).
+- Have already set up the [environment](https://reactnative.dev/docs/environment-setup).
+- Run the command `yarn install` or `npx install` to install project dependencies.
 
-### Rodando no android
+### Running on Android
 
-Após cumprir todas etapas iniciais, basta apenas:
+After completing all initial steps, simply:
 
-- Rodar o comando `yarn start` para subir o servidor de desenvolvimento.
-- Rodar o comando `yarn android` para fazer o build do app para o emulador.
+- Run the command `yarn start` to start the development server.
+- Run the command `yarn android` to build the app for the emulator.
 
 ## Directory Structure
 
